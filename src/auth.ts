@@ -50,6 +50,23 @@ export const { handle, signIn, signOut } = SvelteKitAuth(async (event) => {
 					console.error('error signing in with github: ', err);
 				}
 			}
+		},
+		callbacks: {
+			redirect() {
+				return '/exex';
+			},
+			jwt({ token, account, profile }) {
+				if (account && profile) {
+					token.githubId = profile.id;
+				}
+				return token;
+			},
+			session({ session, token }) {
+				if (session.user) {
+					session.user.githubId = token.githubId;
+				}
+				return session;
+			}
 		}
 	};
 	return authOptions;

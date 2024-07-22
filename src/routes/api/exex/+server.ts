@@ -1,14 +1,15 @@
 import { checkAuth } from '$lib/check-auth';
+import db from '$lib/db';
 import createRepoAndAddCollaborator from '$lib/github/new-exex-repo';
 import type { RequestHandler } from './$types';
-import { error } from '@sveltejs/kit';
+import { error, json } from '@sveltejs/kit';
 
 const BASE_REPO_NAME = 'rambda-exex-js-';
 
-export const POST: RequestHandler = async ({ request, params, locals }) => {
+export const POST: RequestHandler = async ({ request, locals }) => {
 	const session = await checkAuth(locals);
 
-	console.log('Handling new exex');
+	console.log('Handling new exex: session: ', session);
 
 	let data;
 	try {
@@ -24,6 +25,7 @@ export const POST: RequestHandler = async ({ request, params, locals }) => {
 	console.log('name : ', name);
 
 	const repoName = BASE_REPO_NAME + name;
+
 	const userGithubUsername = session.user!.name!;
 
 	try {
@@ -32,7 +34,10 @@ export const POST: RequestHandler = async ({ request, params, locals }) => {
 		console.error('error creating new ExEx repo: ', err);
 	}
 
-	console.log('data: ', data);
+	await db.query`
+    INSERT INTO github_repos (github_id, repo_name)
+    VALUES (${session.user.githubId}, ${repoName})
+  `;
 
-	return new Response(String('Ok'));
+	return json({ repoName });
 };
