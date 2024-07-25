@@ -24,6 +24,7 @@
 		"eslint-plugin-svelte": "^2.36.0",
 		"globals": "^15.0.0",
 		"i": "^0.3.7",
+		"monaco-editor": "^0.50.0",
 		"prettier": "^3.1.1",
 		"prettier-plugin-svelte": "^3.1.2",
 		"svelte": "^5.0.0-next.1",
@@ -38,8 +39,12 @@
 	"dependencies": {
 		"@auth/core": "^0.34.1",
 		"@auth/sveltekit": "^1.4.1",
+		"@octokit/rest": "^21.0.1",
+		"amqplib": "^0.10.4",
 		"autoprefixer": "^10.4.19",
+		"dockerode": "^4.0.2",
 		"nanoid": "^5.0.7",
-		"pg": "^8.12.0"
+		"pg": "^8.12.0",
+		"socket.io-client": "^4.7.5"
 	}
 }

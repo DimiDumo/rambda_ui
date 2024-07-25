@@ -1,7 +1,8 @@
-import type { PageServerLoad } from './$types';
+import type { Actions, PageServerLoad } from './$types';
 import db from '$lib/db';
 import { checkAuth } from '$lib/check-auth';
 import { error } from '@sveltejs/kit';
+import { getFileFromRepo } from '$lib/github/get-file-from-repo';
 
 async function getGithubRepo(repoName: string, githubUserId: number) {
 	const {
@@ -27,6 +28,7 @@ export const load: PageServerLoad = async ({ params, locals }) => {
 	const githubUserId = session.user.githubId;
 
 	return {
-		githubRepo: await getGithubRepo(params.repoName, githubUserId)
+		githubRepo: await getGithubRepo(params.repoName, githubUserId),
+		files: [await getFileFromRepo(params.repoName, 'index.js', 'save')]
 	};
 };

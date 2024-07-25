@@ -10,28 +10,8 @@ export default async function createRepoAndAddCollaborator(
 	collaboratorUsername: string
 ) {
 	try {
-		// Initialize the GitHub API client
-		// const gh = new GitHub({ token: GITHUB_ACCESS_TOKEN });
-
-		// Get the authenticated user
-		// const me = gh.getUser();
-
-		// // Create a new repository
-		// const createRepoResponse = await me.createRepo({
-		// 	name: repoName,
-		// 	description: 'Rambda ExEx javascript verions',
-		// 	private: true
-		// });
-		// Create a new repository from a template
 		const createRepoResponse = await createRepoFromTemplate(repoName);
 		console.log('Created new user js ExEx repo');
-
-		// Add collaborator
-		// const repo = gh.getRepo(createRepoResponse.data.owner.login, repoName);
-
-		// const addCollaboratorResponse = await gh.addCollaborator(collaboratorUsername, {
-		// 	permission: 'push' // 'push' permission gives write access
-		// });
 
 		// TODO: ENV VAR for owner
 		await addCollaborator('dimidumo', repoName, collaboratorUsername);

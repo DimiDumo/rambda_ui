@@ -27,7 +27,9 @@
 
 			console.log('repoName : ', repoName);
 
-			goto(`/exex/${repoName}`);
+			await new Promise((r) => setTimeout(r, 3_000));
+
+			goto(`/exex/${repoName}`, { invalidateAll: true });
 		} catch (err) {
 			console.error('Err calling POST on /api/exex: ', err);
 			throw err;
