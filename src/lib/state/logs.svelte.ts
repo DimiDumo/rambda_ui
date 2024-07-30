@@ -5,7 +5,7 @@ export function createRepoLogsSubscription(repoName: string) {
 	let logs = $state([]);
 
 	const socket = io('http://ec2-3-125-122-62.eu-central-1.compute.amazonaws.com:3000');
-	socket.emit('subscribe', { repoName, branch });
+	socket.emit('subscribe', { repoName });
 
 	socket.on('repoUpdate', (log) => {
 		console.log(`Received update for ${repoName}:`, log);
