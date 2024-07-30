@@ -6,14 +6,21 @@
 
 	let content = $state(data.files[0]);
 	let contentChanged = $state(false);
+	let showAltLogs = $state(false);
 
 	$effect(() => {
+		contentChanged = true;
+	});
+
+	$effect(() => {
+		console.log('content changed', !!content);
 		contentChanged = true;
 	});
 
 	console.log('data: ', data);
 
 	async function onTest() {
+		showAltLogs = true;
 		console.log('onTest');
 		if (contentChanged) {
 			try {
@@ -90,6 +97,7 @@
 		</div>
 	</div>
 	<div style="width: 800px; height: 300px">
-		<Logs repoName={$page.params.repoName} />
+		<Logs repoName={$page.params.repoName} {showAltLogs} />
 	</div>
 </div>
+

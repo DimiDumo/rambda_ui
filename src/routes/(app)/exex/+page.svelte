@@ -4,12 +4,14 @@
 	import { nanoid } from 'nanoid';
 
 	let { data } = $props();
+	let isLoading = $state(false);
 
 	console.log('data: ', data);
 
 	console.log('Logged in as: ', data.session.user.name);
 
 	async function createNewExEx() {
+		isLoading = true;
 		try {
 			const response = await fetch('/api/exex', {
 				method: 'POST',
@@ -34,13 +36,19 @@
 			console.error('Err calling POST on /api/exex: ', err);
 			throw err;
 		}
+		isLoading = false;
 	}
 </script>
 
 <div class="flex justify-center items-center flex-col gap-6">
 	<h1 class="text-2xl">ExEx'es</h1>
 
-	<button onclick={createNewExEx} class="btn btn-primary">Create new ExEx</button>
+	<button onclick={createNewExEx} class="btn btn-primary" disabled={isLoading}>
+		{#if isLoading}
+			<span class="loading loading-spinner loading-sm"></span>
+		{/if}
+		Create new ExEx
+	</button>
 
 	<button class="btn btn-primary" onclick={signOut}>Logout</button>
 
@@ -52,3 +60,4 @@
 		<p style="color: red">{error.message}</p>
 	{/await}
 </div>
+
